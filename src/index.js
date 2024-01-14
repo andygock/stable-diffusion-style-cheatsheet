@@ -1,96 +1,83 @@
-// manage mouseover and mouseout events for multiple elements
-// add one at a time, remove all at once with clear()
-class MouseHoverManager {
-  constructor() {
-    this.elements = [];
-  }
-
-  add(element, mouseover, mouseout) {
-    this.elements.push({ element, mouseover, mouseout });
-    element.addEventListener("mouseover", mouseover);
-    element.addEventListener("mouseout", mouseout);
-  }
-
-  clear() {
-    this.elements.forEach(({ element, mouseover, mouseout }) => {
-      element.removeEventListener("mouseover", mouseover);
-      element.removeEventListener("mouseout", mouseout);
-    });
-    this.elements = [];
-  }
-}
-
-// manage click events for multiple elements
-// add one at a time, remove all at once with clear()
-class MouseClickManager {
-  constructor() {
-    this.elements = [];
-  }
-
-  add(element, click) {
-    this.elements.push({ element, click });
-    element.addEventListener("click", click);
-  }
-
-  clear() {
-    this.elements.forEach(({ element, click }) => {
-      element.removeEventListener("click", click);
-    });
-    this.elements = [];
-  }
-}
-
-async function copyToClipboard(element) {
-  try {
-    await navigator.clipboard.writeText(element.textContent);
-    console.log("Copying to clipboard was successful!");
-    element.dataset.title = "Copied to clipboard!";
-
-    // revert back to original title after 1 second
-    setTimeout(() => {
-      element.dataset.title = "Click to copy prompt to clipboard";
-    }, 1000);
-  } catch (err) {
-    console.error("Could not copy text: ", err);
-  }
-}
-
-function closeModal() {
-  const modal = document.querySelector(".modal");
-  if (modal) {
-    modal.style.display = "none";
-    if (history.state && history.state.modalOpen) {
-      // console.log("model is open, do history.back()");
-      // history.back();
-    }
-  }
-}
-
-function openModal() {
-  const modal = document.querySelector(".modal");
-  if (modal) {
-    modal.style.display = "block";
-    history.pushState({ modalOpen: true }, null);
-    // console.log("openModal, pushState", history.state);
-  }
-}
-
-function isModalOpen() {
-  const modal = document.querySelector(".modal");
-  if (modal) {
-    return modal.style.display === "block";
-  }
-  return false;
-}
-
-// iife
 (function () {
   // global vars
-  let styleFile = "female.json";
   let imageDir = "./images";
 
-  // get basename of style file
-  let styleFileName = styleFile.split(".")[0];
+  // manage mouseover and mouseout events for multiple elements
+  // add one at a time, remove all at once with clear()
+  class MouseHoverManager {
+    constructor() {
+      this.elements = [];
+    }
+
+    add(element, mouseover, mouseout) {
+      this.elements.push({ element, mouseover, mouseout });
+      element.addEventListener("mouseover", mouseover);
+      element.addEventListener("mouseout", mouseout);
+    }
+
+    clear() {
+      this.elements.forEach(({ element, mouseover, mouseout }) => {
+        element.removeEventListener("mouseover", mouseover);
+        element.removeEventListener("mouseout", mouseout);
+      });
+      this.elements = [];
+    }
+  }
+
+  // manage click events for multiple elements
+  // add one at a time, remove all at once with clear()
+  class MouseClickManager {
+    constructor() {
+      this.elements = [];
+    }
+
+    add(element, click) {
+      this.elements.push({ element, click });
+      element.addEventListener("click", click);
+    }
+
+    clear() {
+      this.elements.forEach(({ element, click }) => {
+        element.removeEventListener("click", click);
+      });
+      this.elements = [];
+    }
+  }
+
+  async function copyToClipboard(element) {
+    try {
+      await navigator.clipboard.writeText(element.textContent);
+      console.log("Copying to clipboard was successful!");
+      element.dataset.title = "Copied to clipboard!";
+
+      // revert back to original title after 1 second
+      setTimeout(() => {
+        element.dataset.title = "Click to copy prompt to clipboard";
+      }, 1000);
+    } catch (err) {
+      console.error("Could not copy text: ", err);
+    }
+  }
+
+  function closeModal() {
+    const modal = document.querySelector(".modal");
+    if (modal) {
+      modal.style.display = "none";
+      if (history.state && history.state.modalOpen) {
+        // console.log("model is open, do history.back()");
+        // history.back();
+      }
+    }
+  }
+
+  function openModal() {
+    const modal = document.querySelector(".modal");
+    if (modal) {
+      modal.style.display = "block";
+      history.pushState({ modalOpen: true }, null);
+      // console.log("openModal, pushState", history.state);
+    }
+  }
 
   function handleRouteChange(e) {
     // the hash could be e.g #/female, #/male
@@ -103,6 +90,10 @@ function isModalOpen() {
       loadStyle(styleFileNameFromHash);
     }
   }
+
+  //
+  // script starts here
+  //
 
   // hash router handlers
   window.addEventListener("load", handleRouteChange);
@@ -251,7 +242,7 @@ function isModalOpen() {
 
   // wait for DOM load
   document.addEventListener("DOMContentLoaded", async function () {
-    loadStyle(styleFileName);
+    // on "load", it will load the required style anyway, no need to do it here
 
     //
     // Modal handling
