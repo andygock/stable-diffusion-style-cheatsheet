@@ -40,6 +40,21 @@ class MouseClickManager {
   }
 }
 
+async function copyToClipboard(element) {
+  try {
+    await navigator.clipboard.writeText(element.textContent);
+    console.log("Copying to clipboard was successful!");
+    element.dataset.title = "Copied to clipboard!";
+
+    // revert back to original title after 1 second
+    setTimeout(() => {
+      element.dataset.title = "Click to copy prompt to clipboard";
+    }, 1000);
+  } catch (err) {
+    console.error("Could not copy text: ", err);
+  }
+}
+
 function closeModal() {
   const modal = document.querySelector(".modal");
   if (modal) {
@@ -189,14 +204,7 @@ function isModalOpen() {
 
         // add event listener to copy caption text to clipboard when clicked
         clickManager.add(caption, function () {
-          navigator.clipboard.writeText(this.textContent).then(
-            function () {
-              console.log("Copying to clipboard was successful!");
-            },
-            function (err) {
-              console.error("Could not copy text: ", err);
-            }
-          );
+          copyToClipboard(this);
         });
 
         gridItem.appendChild(caption);
@@ -216,6 +224,20 @@ function isModalOpen() {
             img.src = `${imageDir}/${name}/${style}.${i}.webp`;
             modalContent.appendChild(img);
           }
+
+          // add div to show prompt
+          const prompt = document.createElement("div");
+          prompt.classList.add("prompt");
+          prompt.textContent = style;
+
+          // mamke the prompt copyable
+          prompt.classList.add("copyable");
+          prompt.dataset.title = "Click to copy prompt to clipboard";
+          clickManager.add(prompt, function () {
+            copyToClipboard(this);
+          });
+
+          modalContent.appendChild(prompt);
 
           openModal();
         });
@@ -239,6 +261,16 @@ function isModalOpen() {
     // when user clicks outside content, they are always clicking on .modal
     const modal = document.querySelector(".modal");
     modal.addEventListener("click", function (e) {
+      // don't continue if user clicked on modal-content or its inside elements
+      // console.log("modal click", e.target);
+      if (
+        e.target.classList.contains("modal-content") ||
+        e.target.classList.contains("prompt") ||
+        e.target.tagName === "IMG"
+      ) {
+        return;
+      }
+
       closeModal();
     });
 

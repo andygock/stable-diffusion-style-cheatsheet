@@ -175,6 +175,7 @@ img {
 
 .modal-content {
   display: grid;
+  z-index: 2;
   grid-template-columns: repeat(2, 1fr);
   grid-gap: 10px;
   justify-content: center; /* center horizontally */
@@ -183,11 +184,17 @@ img {
   background-color: #fefefe;
   padding: 20px;
   border: 1px solid #888;
-  width: 512px;
+  /* width: 512px; */
   height: auto;
   top: 50%; /* position at the center of the viewport vertically */
   left: 50%; /* position at the center of the viewport horizontally */
   transform: translate(-50%, -50%); /* move the modal to the center */
+}
+
+.modal-content .prompt {
+  grid-column: 1 / span 2;
+  text-align: center;
+  color: #222;
 }
 
 .modal-content img {
