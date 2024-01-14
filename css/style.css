@@ -63,6 +63,10 @@ body {
   transition: color 0.3s ease;
 }
 
+.grid-item img {
+  cursor: pointer;
+}
+
 .overlay {
   position: absolute;
   bottom: calc(0px + var(--caption-height));

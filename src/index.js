@@ -44,6 +44,10 @@ function closeModal() {
   const modal = document.querySelector(".modal");
   if (modal) {
     modal.style.display = "none";
+    if (history.state && history.state.modalOpen) {
+      // console.log("model is open, do history.back()");
+      // history.back();
+    }
   }
 }
 
@@ -51,6 +55,8 @@ function openModal() {
   const modal = document.querySelector(".modal");
   if (modal) {
     modal.style.display = "block";
+    history.pushState({ modalOpen: true }, null);
+    // console.log("openModal, pushState", history.state);
   }
 }
 
@@ -216,30 +222,6 @@ function isModalOpen() {
 
         grid.appendChild(gridItem);
       });
-
-      //
-      // Modal handling
-      //
-
-      // modal element covers the entire viewport with modal-content on top of it
-      // when user clicks outside content, they are always clicking on .modal
-      const modal = document.querySelector(".modal");
-      modal.addEventListener("click", function (e) {
-        closeModal();
-      });
-
-      // Close the modal when the Escape key is pressed
-      document.addEventListener("keydown", function (event) {
-        if (event.key === "Escape" && isModalOpen()) {
-          closeModal();
-        }
-      });
-
-      // TODO: back button to close modal
-      window.addEventListener("popstate", function (event) {
-        // always close modal when user navigates
-        closeModal();
-      });
     } catch (error) {
       console.error("Error:", error);
     }
@@ -248,5 +230,33 @@ function isModalOpen() {
   // wait for DOM load
   document.addEventListener("DOMContentLoaded", async function () {
     loadStyle(styleFileName);
+
+    //
+    // Modal handling
+    //
+
+    // modal element covers the entire viewport with modal-content on top of it
+    // when user clicks outside content, they are always clicking on .modal
+    const modal = document.querySelector(".modal");
+    modal.addEventListener("click", function (e) {
+      closeModal();
+    });
+
+    // Close the modal when the Escape key is pressed
+    document.addEventListener("keydown", function (event) {
+      if (event.key === "Escape") {
+        closeModal();
+      }
+    });
+
+    // TODO: check again, seems not 100% reliable
+    window.addEventListener("popstate", function (event) {
+      // console.log("popstate", event.state);
+      modal.style.display = "none";
+
+      if (event.state && event.state.modalOpen) {
+        closeModal();
+      }
+    });
   });
 })();
