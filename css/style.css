@@ -22,13 +22,14 @@
   --color-secondary: rgb(48, 55, 68);
   --color-highlight: #fff;
   --color-dot: #ccc;
+  --font-family: "Roboto Condensed", Gotham, "Helvetica Neue", Helvetica, Arial,
+    sans-serif;
 }
 
 body {
   background: var(--color-background);
   color: var(--color-primary);
-  font-family: "Roboto Condensed", Gotham, "Helvetica Neue", Helvetica, Arial,
-    sans-serif;
+  font-family: var(--font-family);
   margin: 0 0 1rem 0;
   padding: 1rem;
   font-size: medium;
@@ -257,4 +258,48 @@ a {
 
 a:hover {
   color: var(--color-highlight);
+}
+
+/* search bar  */
+
+#search-container {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+input#search-input {
+  font-family: var(--font-family);
+  font-weight: bold;
+  font-size: medium;
+  padding: 10px;
+  border: none;
+  background-color: var(--color-secondary); /* Use existing color */
+  color: var(--color-highlight); /* Use existing color */
+  transition: box-shadow 0.3s ease;
+}
+
+input#search-input:focus {
+  outline: none;
+  /* border: 1px solid var(--color-highlight); */
+}
+
+button#search-clear {
+  font-family: var(--font-family);
+  font-weight: bold;
+  font-size: medium;
+  padding: 10px;
+  border: none;
+  background-color: var(--color-secondary); /* Use existing color */
+  color: var(--color-primary); /* Use existing color */
+  transition: box-shadow 0.3s ease;
+}
+
+button#search-clear:hover {
+  filter: brightness(1.5);
+}
+
+/* hide grid elements when used with search  */
+.hidden {
+  display: none;
 }

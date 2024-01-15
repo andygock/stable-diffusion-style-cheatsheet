@@ -91,6 +91,44 @@
     }
   }
 
+  function initSearchBar() {
+    // handle search input input#search-input
+    const searchInput = document.querySelector("#search-input");
+
+    // when typing in inputm filter the grid via the caption text
+    searchInput.addEventListener("input", function (e) {
+      // hide the clear button when input is empty, add and remove .hidden class
+      const searchClear = document.querySelector("#search-clear");
+      if (e.target.value.length === 0) {
+        searchClear.classList.add("hidden");
+      } else {
+        searchClear.classList.remove("hidden");
+      }
+
+      // filter the grid, show only grid items that contain the search query
+      // case insensitive
+      const query = e.target.value.toLowerCase();
+      const gridItems = document.querySelectorAll(".grid-item");
+
+      gridItems.forEach((gridItem) => {
+        const caption = gridItem.querySelector(".caption");
+        const captionText = caption.textContent.toLowerCase();
+        if (captionText.includes(query)) {
+          gridItem.classList.remove("hidden");
+        } else {
+          gridItem.classList.add("hidden");
+        }
+      });
+    });
+
+    // clicking button#search-clear will clear the search input
+    const searchClear = document.querySelector("#search-clear");
+    searchClear.addEventListener("click", function (e) {
+      searchInput.value = "";
+      searchInput.dispatchEvent(new Event("input"));
+    });
+  }
+
   //
   // script starts here
   //
@@ -278,7 +316,6 @@
       }
     });
 
-    // TODO: check again, seems not 100% reliable
     window.addEventListener("popstate", function (event) {
       // console.log("popstate", event.state);
       modal.style.display = "none";
@@ -287,5 +324,7 @@
         closeModal();
       }
     });
+
+    initSearchBar();
   });
 })();
