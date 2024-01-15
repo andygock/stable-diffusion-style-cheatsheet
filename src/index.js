@@ -174,9 +174,15 @@
           gridItem,
           function () {
             this.querySelector(".overlay").classList.add("show");
+
+            // select the adjacent caption and add class .highlight
+            this.querySelector(".caption").classList.add("highlight");
           },
           function () {
             this.querySelector(".overlay").classList.remove("show");
+
+            // remove .highlight from caption
+            this.querySelector(".caption").classList.remove("highlight");
           }
         );
 
