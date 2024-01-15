@@ -1,8 +1,8 @@
 (function () {
   // global vars
   let imageDir = "./images";
-
   let defaultStyleName = "female";
+  const idsAvailable = ["#about", "#grid", "#missing"];
 
   // manage mouseover and mouseout events for multiple elements
   // add one at a time, remove all at once with clear()
@@ -86,9 +86,16 @@
     element.classList.add("hidden");
   }
 
-  function show(selector) {
+  function showOnly(selector) {
     const element = document.querySelector(selector);
     element.classList.remove("hidden");
+
+    // hide all the other ids
+    idsAvailable.forEach((id) => {
+      if (id !== selector) {
+        hide(id);
+      }
+    });
   }
 
   function handleRouteChange(e) {
@@ -102,13 +109,10 @@
 
       // some special cases do not load grid, e.g #/about
       if (styleFileNameFromHash === "about") {
-        hide("#grid");
-        show("#about");
-
+        showOnly("#about");
         return;
       } else {
-        hide("#about");
-        show("#grid");
+        showOnly("#grid");
 
         // load the style
         loadStyle(styleFileNameFromHash);
@@ -175,6 +179,12 @@
     try {
       // load the styles into variable
       const response = await fetch(`./data/${name}.json`);
+
+      // check if response is 404
+      if (!response.ok) {
+        throw new Error("404");
+      }
+
       const styles = await response.json();
 
       // get style container #grid
@@ -310,6 +320,12 @@
       });
     } catch (error) {
       console.error("Error:", error);
+
+      // check if 404 error
+      if (error.message === "404") {
+        // show 404 page
+        showOnly("#missing");
+      }
     }
   }
 
