@@ -1,2 +1,7 @@
 images/*
 images.original/*
+
+# for custom style categories, not hosted on github.io
+custom.json
+data/custom-*
+images/custom-*

@@ -8,4 +8,15 @@ For development, I used [live-server](https://github.com/tapio/live-server). Fav
 
 `images.original/` is my working dir for testing and resizing images. Due to the count and size of the images, they are not included in the repositary.
 
-There is a section for intimate apparel, but it is not included in the GitHub repository as many of the generated images contained some form of nudity.
+## Custom categories
+
+Custom image categories can be added to the cheat sheet by creating a `/custom.json` to the project e.g
+
+```json
+{
+  "useCustom": true,
+  "items": ["intimate"]
+}
+```
+
+Then adding `data/custom-intimate.json` and images to `images/custom-intimate/`. Use 4 images per prompt in the format `<prompt>.[1-4].webp`.

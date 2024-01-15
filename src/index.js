@@ -69,6 +69,49 @@
     return false;
   }
 
+  // use custom images, not publicly hosted
+  async function useCustom() {
+    // fetch /custom.json and look for property "useCustom"
+    try {
+      const response = await fetch("/custom.json");
+
+      // check if response is 404
+      if (!response.ok) {
+        throw new Error("404");
+      }
+
+      const custom = await response.json();
+
+      if (custom.useCustom) {
+        // we have some custom images
+
+        // array of custom names
+        const items = custom.items;
+
+        // add the names to the menu
+        const menu = document.querySelector("#menu");
+
+        items.forEach((item) => {
+          const link = document.createElement("a");
+          link.href = `#/custom-${item}`;
+          link.textContent =
+            item.charAt(0).toUpperCase() + item.slice(1).toLowerCase();
+          menu.appendChild(link);
+        });
+
+        // find any menu items a.special and move them to the end of the menu, keep same order for these
+        const special = document.querySelector(".special");
+        if (special) {
+          menu.appendChild(special);
+        }
+      } else {
+        // we have custom.json, but we don't want to render custom images
+      }
+    } catch (error) {
+      // if no custom.json, it will come here, do nothing
+    }
+  }
+
   async function copyToClipboard(element) {
     try {
       await navigator.clipboard.writeText(element.textContent);
@@ -386,6 +429,8 @@
         closeModal();
       }
     });
+
+    await useCustom();
 
     // route on first page load
     handleRouteChange();
