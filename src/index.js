@@ -46,6 +46,29 @@
     }
   }
 
+  function hostedOnGithub() {
+    // detect if we are hosted on github.io, normally username.github.io/repo/*
+    // return true if we are
+
+    // get the hostname, e.g username.github.io
+    const hostname = window.location.hostname;
+
+    // split the hostname by ., e.g ["username", "github", "io"]
+    const hostnameParts = hostname.split(".");
+
+    // if the hostname has 3 parts, and the last 2 parts are github and io, then we are hosted on github
+    if (
+      hostnameParts.length === 3 &&
+      hostnameParts[1] === "github" &&
+      hostnameParts[2] === "io"
+    ) {
+      return true;
+    }
+
+    // not hosted on github
+    return false;
+  }
+
   async function copyToClipboard(element) {
     try {
       await navigator.clipboard.writeText(element.textContent);
@@ -165,10 +188,6 @@
   //
   // script starts here
   //
-
-  // hash router handlers
-  window.addEventListener("load", handleRouteChange);
-  window.addEventListener("hashchange", handleRouteChange);
 
   // create these hover and click managers, we need these to clean up event listeners
   // when loading a new style
@@ -331,8 +350,6 @@
 
   // wait for DOM load
   document.addEventListener("DOMContentLoaded", async function () {
-    // on "load", it will load the required style anyway, no need to do it here
-
     //
     // Modal handling
     //
@@ -369,6 +386,12 @@
         closeModal();
       }
     });
+
+    // route on first page load
+    handleRouteChange();
+
+    // route on hash change
+    window.addEventListener("hashchange", handleRouteChange);
 
     initSearchBar();
   });
