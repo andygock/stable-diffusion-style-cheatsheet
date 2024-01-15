@@ -2,6 +2,7 @@
   // global vars
   let imageDir = "./images";
   let defaultStyleName = "female";
+  let imageIndex = 1; // can be 1 to 4
   const idsAvailable = ["#about", "#grid", "#missing"];
 
   // manage mouseover and mouseout events for multiple elements
@@ -272,7 +273,7 @@
 
       // create element for each style phrase
       styles.forEach((style) => {
-        const baseImageSrc = `${imageDir}/${name}/${style}.1.webp`;
+        const baseImageSrc = `${imageDir}/${name}/${style}.${imageIndex}.webp`;
 
         // create grid item element, one for each style
         const gridItem = document.createElement("div");
@@ -295,7 +296,7 @@
         const overlay = document.createElement("div");
         overlay.classList.add("overlay");
 
-        for (let i = 2; i <= 4; i++) {
+        for (let i = 1; i <= 4; i++) {
           const dot = document.createElement("span");
           dot.classList.add("dot");
           dot.dataset.image = `${imageDir}/${name}/${style}.${i}.webp`;
@@ -329,12 +330,31 @@
 
             // select the adjacent caption and add class .highlight
             this.querySelector(".caption").classList.add("highlight");
+
+            // get path of img.src, and url decode
+            // "http://127.0.0.1:8080/images/female/bomber%20jacket%20with%20joggers%20and%20trainers%20for%20a%20sporty%20chic%20look.1.webp"
+            // becomes "/images/female/bomber jacket with joggers and trainers for a sporty chic look.1.webp"
+            const imgSrc =
+              "." + decodeURI(img.src).replace(window.location.origin, "");
+
+            // make the correct dot .active
+            const dot = this.querySelector(`.dot[data-image="${imgSrc}"]`);
+
+            if (dot) {
+              dot.classList.add("active");
+            }
           },
           function () {
             this.querySelector(".overlay").classList.remove("show");
 
             // remove .highlight from caption
             this.querySelector(".caption").classList.remove("highlight");
+
+            // remove .active from all dots
+            const dots = this.querySelectorAll(".dot");
+            dots.forEach((dot) => {
+              dot.classList.remove("active");
+            });
           }
         );
 
