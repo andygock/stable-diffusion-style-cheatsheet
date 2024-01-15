@@ -6,6 +6,8 @@ A stand alone web site to guide users on different styling prompts for Stable Di
 - Favicon is by [ionicons](https://github.com/ionic-team/ionicons).
 - Site inspired by [SupaGruen's cheatsheet](https://supagruen.github.io/StableDiffusion-CheatSheet/)
 
+![Screenshot](images/screenshot.jpg)
+
 ## Hosting locally
 
 You can host this locally by running a local web server.
