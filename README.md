@@ -1,12 +1,22 @@
 # Stable Diffusion Styling Cheat Sheet
 
-A stand alone web site to guide user into different styling prompts for Stable Diffusion relating to fashion styling, hair and make up.
+A stand alone web site to guide users on different styling prompts for Stable Diffusion relating to fashion styling, hair and make up. It allows custom additions and local hosting and can be used as a visualk guide to other forms of prompt and output image association.
 
-Images are generated using Stable Diffusion XL with [RealVisXL V3.0 + Turbo](https://civitai.com/models/139562/realvisxl-v30-turbo) checkpoint.
+- Images are generated using Stable Diffusion XL with the [RealVisXL V3.0 + Turbo](https://civitai.com/models/139562/realvisxl-v30-turbo) checkpoint.
+- Favicon is by [ionicons](https://github.com/ionic-team/ionicons).
+- Site inspired by [SupaGruen's cheatsheet](https://supagruen.github.io/StableDiffusion-CheatSheet/)
 
-For development, I used [live-server](https://github.com/tapio/live-server). Favicon is by [ionicons](https://github.com/ionic-team/ionicons). Site inspired by [SupaGruen's cheatsheet](https://supagruen.github.io/StableDiffusion-CheatSheet/)
+## Hosting locally
 
-`images.original/` is my working dir for testing and resizing images. Due to the count and size of the images, they are not included in the repositary.
+You can host this locally by running a local web server.
+
+Simplest way is by using Python HTTP server then visiting <http://localhost:8000/>
+
+```bash
+python -m http.server
+```
+
+For web developmenet, I used [live-server](https://github.com/tapio/live-server) for its excellent live reloading when editing files.
 
 ## Custom categories
 
