@@ -79,12 +79,6 @@ h2 {
   color: var(--color-secondary);
 }
 
-#menu a.special {
-  background-color: var(--color-background);
-  /* color: var(--color-secondary); */
-  /* filter: brightness(1); */
-}
-
 #grid {
   /* container for responsive grid, grid of images 256x256 */
   display: flex;
@@ -277,6 +271,12 @@ a {
 
 a:hover {
   color: var(--color-highlight);
+}
+
+a.active {
+  background-color: var(--color-highlight);
+  color: var(--color-highlight);
+  text-decoration: none;
 }
 
 /* search bar  */

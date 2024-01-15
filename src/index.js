@@ -115,7 +115,6 @@
   async function copyToClipboard(element) {
     try {
       await navigator.clipboard.writeText(element.textContent);
-      console.log("Copying to clipboard was successful!");
       element.dataset.title = "Copied to clipboard!";
 
       // revert back to original title after 1 second
@@ -131,10 +130,6 @@
     const modal = document.querySelector(".modal");
     if (modal) {
       modal.style.display = "none";
-      if (history.state && history.state.modalOpen) {
-        // console.log("model is open, do history.back()");
-        // history.back();
-      }
     }
   }
 
@@ -143,7 +138,6 @@
     if (modal) {
       modal.style.display = "block";
       history.pushState({ modalOpen: true }, null);
-      // console.log("openModal, pushState", history.state);
     }
   }
 
@@ -164,6 +158,22 @@
     });
   }
 
+  function updateMenuActive() {
+    // update menu anchor links, so current routed hash entry is active
+    // add/remove .active class as needed
+    const menu = document.querySelector("#menu");
+    const links = menu.querySelectorAll("a");
+
+    // check whether the current hash is same as menu item's text
+    links.forEach((link) => {
+      if (link.hash === window.location.hash) {
+        link.classList.add("active");
+      } else {
+        link.classList.remove("active");
+      }
+    });
+  }
+
   function handleRouteChange(e) {
     // the hash could be e.g #/female, #/male
     // load a different json e.g female.json, male.json
@@ -176,17 +186,20 @@
       // some special cases do not load grid, e.g #/about
       if (styleFileNameFromHash === "about") {
         showOnly("#about");
+        updateMenuActive();
         return;
       } else {
         showOnly("#grid");
 
         // load the style
         loadStyle(styleFileNameFromHash);
+        updateMenuActive();
       }
     } else {
       // no hash, load default style - redirect to hash, e.g history.push
-      console.log("no hash, load default style");
       window.location.hash = `/${defaultStyleName}`;
+
+      updateMenuActive();
     }
   }
 
@@ -402,7 +415,6 @@
     const modal = document.querySelector(".modal");
     modal.addEventListener("click", function (e) {
       // don't continue if user clicked on modal-content or its inside elements
-      // console.log("modal click", e.target);
       if (
         e.target.classList.contains("modal-content") ||
         e.target.classList.contains("prompt") ||
@@ -422,9 +434,7 @@
     });
 
     window.addEventListener("popstate", function (event) {
-      // console.log("popstate", event.state);
       modal.style.display = "none";
-
       if (event.state && event.state.modalOpen) {
         closeModal();
       }
