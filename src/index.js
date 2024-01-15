@@ -2,6 +2,8 @@
   // global vars
   let imageDir = "./images";
 
+  let defaultStyleName = "female";
+
   // manage mouseover and mouseout events for multiple elements
   // add one at a time, remove all at once with clear()
   class MouseHoverManager {
@@ -79,6 +81,16 @@
     }
   }
 
+  function hide(selector) {
+    const element = document.querySelector(selector);
+    element.classList.add("hidden");
+  }
+
+  function show(selector) {
+    const element = document.querySelector(selector);
+    element.classList.remove("hidden");
+  }
+
   function handleRouteChange(e) {
     // the hash could be e.g #/female, #/male
     // load a different json e.g female.json, male.json
@@ -87,7 +99,24 @@
     if (hash) {
       const styleFileFromHash = hash.replace("#/", "") + ".json";
       const styleFileNameFromHash = styleFileFromHash.split(".")[0];
-      loadStyle(styleFileNameFromHash);
+
+      // some special cases do not load grid, e.g #/about
+      if (styleFileNameFromHash === "about") {
+        hide("#grid");
+        show("#about");
+
+        return;
+      } else {
+        hide("#about");
+        show("#grid");
+
+        // load the style
+        loadStyle(styleFileNameFromHash);
+      }
+    } else {
+      // no hash, load default style - redirect to hash, e.g history.push
+      console.log("no hash, load default style");
+      window.location.hash = `/${defaultStyleName}`;
     }
   }
 

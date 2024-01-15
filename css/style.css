@@ -43,6 +43,12 @@ h1 {
   color: var(--color-highlight);
 }
 
+h2 {
+  font-size: large;
+  margin: 0 0 1rem 0;
+  color: var(--color-highlight);
+}
+
 /* menu  */
 
 #menu {
@@ -65,6 +71,18 @@ h1 {
   /* color: var(--color-highlight); */
   /* use filter to make color and background brighter */
   filter: brightness(1.5);
+}
+
+#menu a:active,
+#menu a.active {
+  background-color: var(--color-highlight);
+  color: var(--color-secondary);
+}
+
+#menu a.special {
+  background-color: var(--color-background);
+  /* color: var(--color-secondary); */
+  /* filter: brightness(1); */
 }
 
 #grid {
@@ -252,7 +270,8 @@ img {
 
 a {
   color: var(--color-primary);
-  text-decoration: none;
+  text-decoration: underline;
+  text-decoration-color: rgba(255, 255, 255, 0.3);
   transition: color 0.3s ease;
 }
 
@@ -299,7 +318,10 @@ button#search-clear:hover {
   filter: brightness(1.5);
 }
 
-/* hide grid elements when used with search  */
 .hidden {
-  display: none;
+  display: none !important;
+}
+
+#about {
+  font-size: large;
 }
