@@ -1,4 +1,4 @@
-# Stable Diffusion Styling Cheat Sheet
+# Stable Diffusion Style Cheat Sheet
 
 A stand alone web site to guide users on different styling prompts for Stable Diffusion relating to fashion styling, hair and make up. It allows custom additions and local hosting and can be used as a visualk guide to other forms of prompt and output image association.
 
