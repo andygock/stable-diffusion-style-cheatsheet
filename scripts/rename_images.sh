@@ -10,7 +10,7 @@ fi
 
 for file in *.jpg; do
   # this may need tweaking on a per set basis
-  prompt=$(exiftool -UserComment "$file" | grep 'User Comment' | sed 's/^User Comment *: //' | sed 's/\.Steps:.*//' | sed 's/[^,]*, //')
+  prompt=$(exiftool -UserComment "$file" | grep 'User Comment' | sed 's/^User Comment *: //' | sed 's/\.Steps:.*//' | sed 's/[^,]*, //' | sed 's/\.Negative prompt: .*//')
 
   # make first char lowercase
   prompt_clean="$(tr '[:upper:]' '[:lower:]' <<<${prompt:0:1})${prompt:1}"

@@ -11,12 +11,12 @@
 arrFemale[0]="highest quality photo of 40yo brunette woman indoors in lounge room"
 arrFemale[1]="highest quality photo of 20yo blonde european woman indoors in bedroom"
 arrFemale[2]="highest quality photo of 30yo redhead american woman outdoors in city"
-arrFemale[3]="highest quality photo of 50yo brunette woman indoors relaxing at home"
+arrFemale[3]="highest quality photo of 60yo blonde woman indoors relaxing at home"
 
 arrMale[0]="highest quality photo of 40yo european man indoors in lounge room"
 arrMale[1]="highest quality photo of 20yo asian man indoors in bedroom"
 arrMale[2]="highest quality photo of 30yo african american man outdoors in city"
-arrMale[3]="highest quality photo of 50yo nordic man indoors in workshop"
+arrMale[3]="highest quality photo of 60yo nordic man indoors in workshop"
 
 # Check for the argument passed to the script
 if [ "$1" == "-female" ]; then
