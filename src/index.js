@@ -47,6 +47,46 @@
     }
   }
 
+  function initIndexButtons() {
+    // clicking on either button changes imageIndex
+    // get the number from .innerText
+
+    // get the buttons #index > button
+    const buttons = document.querySelectorAll("#index > button");
+
+    // add click handler to each
+    buttons.forEach((button) => {
+      button.addEventListener("click", function (e) {
+        // get the number from .innerText
+        const number = parseInt(this.innerText);
+
+        // set imageIndex
+        imageIndex = number;
+
+        // update the buttons
+        buttons.forEach((button) => {
+          button.classList.remove("active");
+        });
+
+        // set current button to active, since we clicked on it
+        this.classList.add("active");
+
+        // reload the current style
+        const hash = window.location.hash;
+        if (hash) {
+          const styleFileNameFromHash = hash.replace("#/", "");
+          loadStyle(styleFileNameFromHash);
+        }
+      });
+    });
+
+    // make current active button, that of the current imageIndex
+    const currentButton = document.querySelector(
+      `#index > button:nth-child(${imageIndex})`
+    );
+    currentButton.classList.add("active");
+  }
+
   function hostedOnGithub() {
     // detect if we are hosted on github.io, normally username.github.io/repo/*
     // return true if we are
@@ -469,5 +509,7 @@
     window.addEventListener("hashchange", handleRouteChange);
 
     initSearchBar();
+
+    initIndexButtons();
   });
 })();

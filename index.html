@@ -10,15 +10,24 @@
   </head>
   <body>
     <h1>Stable Diffusion Style Cheat Sheet</h1>
-    <div id="menu">
-      <a href="#/female">Women's Style</a>
-      <a href="#/male">Men's Style</a>
-      <a href="#/hair-makeup">Hair & Makeup</a>
-      <a href="#/hair-beard">Hair & Beard</a>
-      <a href="#/about" class="special">About</a>
+    <div id="menu-header">
+      <div id="menu">
+        <a href="#/female">Women's Style</a>
+        <a href="#/male">Men's Style</a>
+        <a href="#/hair-makeup">Hair & Makeup</a>
+        <a href="#/hair-beard">Hair & Beard</a>
+        <a href="#/about" class="special">About</a>
+      </div>
+      <div id="index">
+        Default image:&nbsp;
+        <button>1</button>
+        <button>2</button>
+        <button>3</button>
+        <button>4</button>
+      </div>
     </div>
     <div id="search-container">
-      <button id="search-clear">Clear</button>
+      <button id="search-clear" class="hidden">Clear</button>
       <input type="search" id="search-input" placeholder="Search..." />
     </div>
     <div id="grid"></div>
