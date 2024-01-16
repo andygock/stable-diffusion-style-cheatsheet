@@ -244,11 +244,27 @@
     }
   }
 
+  function filterGrid(text) {
+    // filter grid images based on text, case-insensitive
+    const query = text.toLowerCase();
+    const gridItems = document.querySelectorAll(".grid-item");
+
+    gridItems.forEach((gridItem) => {
+      const caption = gridItem.querySelector(".caption");
+      const captionText = caption.textContent.toLowerCase();
+      if (captionText.includes(query)) {
+        gridItem.classList.remove("hidden");
+      } else {
+        gridItem.classList.add("hidden");
+      }
+    });
+  }
+
   function initSearchBar() {
     // handle search input input#search-input
     const searchInput = document.querySelector("#search-input");
 
-    // when typing in inputm filter the grid via the caption text
+    // when typing in input, filter the grid via the caption text
     searchInput.addEventListener("input", function (e) {
       // hide the clear button when input is empty, add and remove .hidden class
       const searchClear = document.querySelector("#search-clear");
@@ -258,20 +274,8 @@
         searchClear.classList.remove("hidden");
       }
 
-      // filter the grid, show only grid items that contain the search query
-      // case insensitive
-      const query = e.target.value.toLowerCase();
-      const gridItems = document.querySelectorAll(".grid-item");
-
-      gridItems.forEach((gridItem) => {
-        const caption = gridItem.querySelector(".caption");
-        const captionText = caption.textContent.toLowerCase();
-        if (captionText.includes(query)) {
-          gridItem.classList.remove("hidden");
-        } else {
-          gridItem.classList.add("hidden");
-        }
-      });
+      // filter the grid, show only grid items that contain the search query, case-insensitive
+      filterGrid(e.target.value);
     });
 
     // clicking button#search-clear will clear the search input
@@ -453,6 +457,12 @@
 
         grid.appendChild(gridItem);
       });
+
+      // filter the grid based on search input
+      const searchInput = document.querySelector("#search-input");
+      if (searchInput.value.length > 0) {
+        filterGrid(searchInput.value);
+      }
     } catch (error) {
       console.error("Error:", error);
 
