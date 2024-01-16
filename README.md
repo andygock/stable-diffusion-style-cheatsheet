@@ -27,8 +27,8 @@ Custom image categories can be added to the cheat sheet by creating a `/custom.j
 ```json
 {
   "useCustom": true,
-  "items": ["intimate"]
+  "items": ["nsfw"]
 }
 ```
 
-Then adding `data/custom-intimate.json` and images to `images/custom-intimate/`. Use 4 images per prompt in the format `<prompt>.[1-4].webp`.
+Then adding `data/custom-nsfw.json` and images to `images/custom-nsfw/`. Use 4 images per prompt in the format `<prompt>.[1-4].webp`.

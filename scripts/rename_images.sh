@@ -12,22 +12,28 @@ for file in *.jpg; do
   # this may need tweaking on a per set basis
   prompt=$(exiftool -UserComment "$file" | grep 'User Comment' | sed 's/^User Comment *: //' | sed 's/\.Steps:.*//' | sed 's/[^,]*, //' | sed 's/\.Negative prompt: .*//')
 
+  # remove double quotes entirely
+  prompt="${prompt//\"/}"
+
+  # remove last char if it's a period
+  prompt="${prompt%.}"
+
   # make first char lowercase
-  prompt_clean="$(tr '[:upper:]' '[:lower:]' <<<${prompt:0:1})${prompt:1}"
+  prompt="$(tr '[:upper:]' '[:lower:]' <<<${prompt:0:1})${prompt:1}"
 
   # don't show prompt if in rename mode
-  [[ "$mode" != "-rename" ]] && echo "Prompt: $prompt_clean"
+  [[ "$mode" != "-rename" ]] && echo "Prompt: $prompt"
 
   if [[ "$mode" == "-rename" ]]; then
     # Initialize file counter and file name
     counter=1
 
-    new_file="${prompt_clean}.${counter}.jpg"
+    new_file="${prompt}.${counter}.jpg"
 
     # Check if file already exists, and find an unused filename
     while [ -f "$new_file" ]; do
       ((counter++))
-      new_file="${prompt_clean}.${counter}.jpg"
+      new_file="${prompt}.${counter}.jpg"
     done
 
     # Rename the file

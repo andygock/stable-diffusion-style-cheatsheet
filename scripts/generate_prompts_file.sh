@@ -8,7 +8,8 @@
 #   cat data/prompts-male.txt | bash ./scripts/generate_prompts_file.sh -male > data/prompts-full/male.txt
 #
 # Note: using "in bedroom" appears to generate a lot of nudity
-#
+# Starter negative prompt:
+# worst quality, normal quality, low quality, low res, blurry, text, watermark, logo, banner, extra digits, cropped, jpeg artifacts, signature, username, error, sketch, duplicate, ugly, monochrome, horror, geometry, mutation, disgusting, nsfw, nude, censored
 
 arrFemale[0]="highest quality photo of 40yo brunette woman indoors in lounge room"
 arrFemale[1]="highest quality photo of 20yo blonde european woman indoors at home"
