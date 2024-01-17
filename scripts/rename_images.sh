@@ -21,6 +21,12 @@ for file in *.jpg; do
   # make first char lowercase
   prompt="$(tr '[:upper:]' '[:lower:]' <<<${prompt:0:1})${prompt:1}"
 
+  # remove leading and trailing spaces
+  prompt="$(echo -e "${prompt}" | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//')"
+
+  # remove trailing ':' if it exists
+  prompt="${prompt%:}"
+
   # don't show prompt if in rename mode
   [[ "$mode" != "-rename" ]] && echo "Prompt: $prompt"
 
