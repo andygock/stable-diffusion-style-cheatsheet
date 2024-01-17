@@ -302,7 +302,7 @@
     modalContentGrid.style.width = "512px";
   }
 
-  function getLargeImageSrc(src) {
+  function getLargeImageSrc_OLD(src) {
     // get the base name of src, and append "768/" to it
     // e.g "images/female/name.2.webp" => "images/female/768/name.2.webp"
     const parts = src.split("/");
@@ -315,6 +315,22 @@
       .join("/");
 
     return largeImageSrc;
+  }
+
+  function getLargeImageSrc(src) {
+    // e.g "images/female/256/name.2.webp" => "images/female/768/name.2.webp"
+    const parts = src.split("/");
+    const baseName = parts[parts.length - 1];
+
+    // replace the 2nd last part with "768", but check it original part is "256", otherwise there could be an error
+    const secondLastPart = parts[parts.length - 2];
+
+    if (secondLastPart === "256") {
+      parts[parts.length - 2] = "768";
+      return parts.join("/");
+    } else {
+      throw new Error("Original source image is incorrect (not 256px)");
+    }
   }
 
   //
@@ -348,7 +364,7 @@
 
       // create element for each style phrase
       styles.forEach((style) => {
-        const baseImageSrc = `${imageDir}/${name}/${style}.${imageIndex}.webp`;
+        const baseImageSrc = `${imageDir}/${name}/256/${style}.${imageIndex}.webp`;
 
         // create grid item element, one for each style
         const gridItem = document.createElement("div");
@@ -374,7 +390,7 @@
         for (let i = 1; i <= 4; i++) {
           const dot = document.createElement("span");
           dot.classList.add("dot");
-          dot.dataset.image = `${imageDir}/${name}/${style}.${i}.webp`;
+          dot.dataset.image = `${imageDir}/${name}/256/${style}.${i}.webp`;
 
           // put the number inside the dot
           const number = document.createElement("span");
@@ -407,8 +423,8 @@
             this.querySelector(".caption").classList.add("highlight");
 
             // get path of img.src, and url decode
-            // "http://127.0.0.1:8080/images/female/bomber%20jacket%20with%20joggers%20and%20trainers%20for%20a%20sporty%20chic%20look.1.webp"
-            // becomes "/images/female/bomber jacket with joggers and trainers for a sporty chic look.1.webp"
+            // "http://127.0.0.1:8080/images/female/256/bomber%20jacket%20with%20joggers%20and%20trainers%20for%20a%20sporty%20chic%20look.1.webp"
+            // becomes "/images/female/256/bomber jacket with joggers and trainers for a sporty chic look.1.webp"
             const imgSrc =
               "." + decodeURI(img.src).replace(window.location.origin, "");
 
@@ -479,7 +495,7 @@
           // add 4 images to modal
           for (let i = 1; i <= 4; i++) {
             // form the image path
-            const imgSrc = `${imageDir}/${name}/${style}.${i}.webp`;
+            const imgSrc = `${imageDir}/${name}/256/${style}.${i}.webp`;
 
             // create IMG
             const img = document.createElement("img");
