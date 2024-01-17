@@ -208,7 +208,7 @@ h2 {
   filter: brightness(1.4);
 }
 
-img {
+#grid img {
   width: var(--image-size);
   height: var(--image-size);
   border-radius: 5px;
@@ -255,11 +255,13 @@ img {
   transition: all 0.3s ease;
 }
 
-.modal-content {
+/* values here should match values in modalMultiGrid() in scripts/index.js */
+
+.modal-content-grid {
   display: grid;
   z-index: 2;
   grid-template-columns: repeat(2, 1fr);
-  grid-gap: 10px;
+  gap: 10px;
   justify-content: center; /* center horizontally */
   align-content: center; /* center vertically */
   position: fixed;
@@ -273,7 +275,7 @@ img {
   transform: translate(-50%, -50%); /* move the modal to the center */
 }
 
-.modal-content .prompt {
+.modal-content-grid .prompt {
   grid-column: 1 / span 2;
   text-align: center;
   color: #222;
@@ -281,9 +283,32 @@ img {
   font-size: large;
 }
 
-.modal-content img {
+.modal-content-grid img {
   height: auto;
   width: 256px;
+  cursor: pointer;
+}
+
+img.size-256 {
+  height: auto;
+  width: 256px;
+}
+
+img.size-512 {
+  height: auto;
+  width: 512px;
+  margin-bottom: 0.5rem;
+}
+
+img.size-768 {
+  height: auto;
+  width: 768px;
+  margin-bottom: 0.5rem;
+}
+
+img.size-1024 {
+  height: auto;
+  width: 1024px;
 }
 
 /* footer  */

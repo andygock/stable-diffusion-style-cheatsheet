@@ -286,6 +286,37 @@
     });
   }
 
+  function modalSingleGrid() {
+    // when modal is open, show only 1x1 grid - used to display single large image
+    const modalContentGrid = document.querySelector(".modal-content-grid");
+    modalContentGrid.style.gridTemplateColumns = "1fr"; // single 1x1 grid
+    modalContentGrid.style.gap = 0;
+    modalContentGrid.style.width = "768px";
+  }
+
+  function modalMultiGrid() {
+    // when modal is open, show only 2x2 grid of smaller images
+    const modalContentGrid = document.querySelector(".modal-content-grid");
+    modalContentGrid.style.gridTemplateColumns = "repeat(2, 1fr)"; // 2x2 grid
+    modalContentGrid.style.gap = "10px";
+    modalContentGrid.style.width = "512px";
+  }
+
+  function getLargeImageSrc(src) {
+    // get the base name of src, and append "768/" to it
+    // e.g "images/female/name.2.webp" => "images/female/768/name.2.webp"
+    const parts = src.split("/");
+    const baseName = parts[parts.length - 1];
+
+    // append "768/" to baseName
+    const largeImageSrc = parts
+      .slice(0, parts.length - 1)
+      .concat(["768", baseName])
+      .join("/");
+
+    return largeImageSrc;
+  }
+
   //
   // script starts here
   //
@@ -425,17 +456,74 @@
         //
         // modal click handler
         //
+        const largeImageDir = "images.original";
+
+        const modalContentGrid = document.querySelector(".modal-content-grid");
+
+        // get grid-template-columns, grid-gap and width, and save them so we can restore them later
+        // as these are changed when swapping from 2x2 to 1x1 display
+
         clickManager.add(gridItem, function (e) {
           // don't open modal if user clicked on a dot, or clicked on the caption
           if (e.target.classList.contains("dot")) return;
           if (e.target.classList.contains("caption")) return;
 
-          const modalContent = document.querySelector(".modal-content");
-          modalContent.innerHTML = "";
+          // set the grid-template-columns to 2x2 grid and grid-gap to original values
+          // if user previously pressed escape to close the modal, then it may not have been reset
+          modalMultiGrid();
+
+          // create content for the modal
+
+          modalContentGrid.innerHTML = "";
+
+          // add 4 images to modal
           for (let i = 1; i <= 4; i++) {
+            // form the image path
+            const imgSrc = `${imageDir}/${name}/${style}.${i}.webp`;
+
+            // create IMG
             const img = document.createElement("img");
-            img.src = `${imageDir}/${name}/${style}.${i}.webp`;
-            modalContent.appendChild(img);
+            img.src = imgSrc;
+            img.classList.add("size-256");
+
+            // add listener, when user clicks on image, display a larger version of it
+            img.addEventListener("click", function () {
+              // create large IMG
+              const largeImg = document.createElement("img");
+              largeImg.src = getLargeImageSrc(imgSrc);
+              largeImg.classList.add("size-768");
+
+              // if user clicks large image, display 2x2 grid again
+              largeImg.addEventListener("click", function () {
+                // show smaller grid images again
+
+                // restore styles back to 2x2 grid
+                modalMultiGrid();
+
+                modalContentGrid.querySelectorAll("img").forEach((img) => {
+                  if (img.width === 256) {
+                    img.style.display = "block";
+                  }
+                });
+
+                // remove this larger image
+                this.remove();
+              });
+
+              // hide grid images
+              modalContentGrid.querySelectorAll("img").forEach((img) => {
+                if (img.width === 256) {
+                  // smaller grid images
+                  img.style.display = "none";
+                }
+              });
+
+              // add the large image at start of modalContentGrid, so caption is always at end
+              modalSingleGrid();
+              modalContentGrid.prepend(largeImg);
+            });
+
+            modalContentGrid.appendChild(img);
           }
 
           // add div to show prompt
@@ -443,15 +531,16 @@
           prompt.classList.add("prompt");
           prompt.textContent = style;
 
-          // mamke the prompt copyable
+          // make the prompt copyable
           prompt.classList.add("copyable");
           prompt.dataset.title = "Click to copy prompt to clipboard";
           clickManager.add(prompt, function () {
             copyToClipboard(this);
           });
 
-          modalContent.appendChild(prompt);
+          modalContentGrid.appendChild(prompt);
 
+          // make modal visible
           openModal();
         });
 
@@ -480,13 +569,13 @@
     // Modal handling
     //
 
-    // modal element covers the entire viewport with modal-content on top of it
+    // modal element covers the entire viewport with modal-content-grid on top of it
     // when user clicks outside content, they are always clicking on .modal
     const modal = document.querySelector(".modal");
     modal.addEventListener("click", function (e) {
       // don't continue if user clicked on modal-content or its inside elements
       if (
-        e.target.classList.contains("modal-content") ||
+        e.target.classList.contains("modal-content-grid") ||
         e.target.classList.contains("prompt") ||
         e.target.tagName === "IMG"
       ) {
