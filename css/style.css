@@ -16,6 +16,7 @@
 
 :root {
   --caption-height: 50px;
+  --caption-height-large: 50px;
   --image-size: 256px;
   --color-background: #222;
   --color-primary: #999;
@@ -260,19 +261,37 @@ h2 {
 .modal-content-grid {
   display: grid;
   z-index: 2;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 10px;
   justify-content: center; /* center horizontally */
   align-content: center; /* center vertically */
   position: fixed;
   background-color: #fefefe;
   padding: 20px;
   border: 1px solid #888;
-  width: 512px;
-  height: auto;
   top: 50%; /* position at the center of the viewport vertically */
   left: 50%; /* position at the center of the viewport horizontally */
   transform: translate(-50%, -50%); /* move the modal to the center */
+  transition: all 0.3s ease;
+
+  /* align content in each grid element to the middle */
+  align-items: center;
+  justify-items: center;
+
+  /* these below change when transitioning between single to multi grid */
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  width: 512px;
+
+  /* last value is experimentally determined */
+  height: calc(var(--caption-height-large) + 512px + 10px);
+}
+
+.modal-content-grid.single {
+  grid-template-columns: 1fr;
+  gap: 0;
+  width: 768px;
+
+  /* last value is experimentally determined */
+  height: calc(var(--caption-height-large) + 768px + 5px);
 }
 
 .modal-content-grid .prompt {
@@ -281,27 +300,26 @@ h2 {
   color: #222;
   font-weight: bold;
   font-size: large;
+  height: var(--caption-height-large);
 }
 
 .modal-content-grid img {
-  height: auto;
-  width: 256px;
   cursor: pointer;
 }
 
 img.size-256 {
-  height: auto;
+  height: 256px;
   width: 256px;
 }
 
 img.size-512 {
-  height: auto;
+  height: 512px;
   width: 512px;
   margin-bottom: 0.5rem;
 }
 
 img.size-768 {
-  height: auto;
+  height: 768px;
   width: 768px;
   margin-bottom: 0.5rem;
 }

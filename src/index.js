@@ -5,6 +5,8 @@
   let imageIndex = 1; // can be 1 to 4
   const idsAvailable = ["#about", "#grid", "#missing"];
 
+  let lazyLoadInstance;
+
   // manage mouseover and mouseout events for multiple elements
   // add one at a time, remove all at once with clear()
   class MouseHoverManager {
@@ -289,17 +291,13 @@
   function modalSingleGrid() {
     // when modal is open, show only 1x1 grid - used to display single large image
     const modalContentGrid = document.querySelector(".modal-content-grid");
-    modalContentGrid.style.gridTemplateColumns = "1fr"; // single 1x1 grid
-    modalContentGrid.style.gap = 0;
-    modalContentGrid.style.width = "768px";
+    modalContentGrid.classList.add("single");
   }
 
   function modalMultiGrid() {
     // when modal is open, show only 2x2 grid of smaller images
     const modalContentGrid = document.querySelector(".modal-content-grid");
-    modalContentGrid.style.gridTemplateColumns = "repeat(2, 1fr)"; // 2x2 grid
-    modalContentGrid.style.gap = "10px";
-    modalContentGrid.style.width = "512px";
+    modalContentGrid.classList.remove("single");
   }
 
   function getLargeImageSrc_OLD(src) {
@@ -320,7 +318,6 @@
   function getLargeImageSrc(src) {
     // e.g "images/female/256/name.2.webp" => "images/female/768/name.2.webp"
     const parts = src.split("/");
-    const baseName = parts[parts.length - 1];
 
     // replace the 2nd last part with "768", but check it original part is "256", otherwise there could be an error
     const secondLastPart = parts[parts.length - 2];
@@ -374,11 +371,14 @@
         // create main image
         //
         const img = document.createElement("img");
-        img.src = baseImageSrc;
+        // img.src = baseImageSrc;
+        img.src = "./images/spinner.svg";
+        img.dataset.src = baseImageSrc;
         img.alt = style;
         img.width = 256;
         img.height = 256;
         img.loading = "lazy";
+        img.classList.add("lazy");
         gridItem.appendChild(img);
 
         //
@@ -472,8 +472,6 @@
         //
         // modal click handler
         //
-        const largeImageDir = "images.original";
-
         const modalContentGrid = document.querySelector(".modal-content-grid");
 
         // get grid-template-columns, grid-gap and width, and save them so we can restore them later
@@ -492,22 +490,40 @@
 
           modalContentGrid.innerHTML = "";
 
-          // add 4 images to modal
+          //
+          // add 4 images to modal as 2x2 grid
+          //
           for (let i = 1; i <= 4; i++) {
             // form the image path
             const imgSrc = `${imageDir}/${name}/256/${style}.${i}.webp`;
 
+            // create PICTURE element
+            const picture = document.createElement("picture");
+
+            // create WEBP source
+            const source = document.createElement("source");
+            source.srcset = imgSrc;
+            source.type = "image/webp";
+
             // create IMG
             const img = document.createElement("img");
-            img.src = imgSrc;
+            img.src = "./images/spinner.svg";
+            img.dataset.src = imgSrc;
             img.classList.add("size-256");
+            img.classList.add("lazy");
+            img.width = 256;
+            img.height = 256;
 
-            // add listener, when user clicks on image, display a larger version of it
+            //
+            // add listener, when user clicks on image, display SINGLE LARGE IMAGE
+            //
             img.addEventListener("click", function () {
               // create large IMG
               const largeImg = document.createElement("img");
               largeImg.src = getLargeImageSrc(imgSrc);
-              largeImg.classList.add("size-768");
+              // largeImg.src = "./images/spinner.svg";
+              // largeImg.dataset.src = getLargeImageSrc(imgSrc);
+              // largeImg.classList.add("lazy");
 
               // if user clicks large image, display 2x2 grid again
               largeImg.addEventListener("click", function () {
@@ -528,18 +544,32 @@
 
               // hide grid images
               modalContentGrid.querySelectorAll("img").forEach((img) => {
+                // smaller grid images
                 if (img.width === 256) {
-                  // smaller grid images
                   img.style.display = "none";
                 }
               });
 
               // add the large image at start of modalContentGrid, so caption is always at end
               modalSingleGrid();
+
+              // make image same size as overall grid: 256 + 256 + gap of 10px
+              // enalrge it later
+              largeImg.width = 522;
+              largeImg.width = 522;
               modalContentGrid.prepend(largeImg);
+
+              // delay 0.3s, as that is the css ease transition time
+              setTimeout(() => {
+                largeImg.classList.add("size-768");
+                largeImg.width = 768;
+                largeImg.height = 768;
+              }, 300);
             });
 
-            modalContentGrid.appendChild(img);
+            picture.appendChild(source);
+            picture.appendChild(img);
+            modalContentGrid.appendChild(picture);
           }
 
           // add div to show prompt
@@ -558,10 +588,15 @@
 
           // make modal visible
           openModal();
+
+          // lazy load the images (probably not needed)
+          lazyLoadInstance.update();
         });
 
         grid.appendChild(gridItem);
       });
+
+      lazyLoadInstance.update();
 
       // filter the grid based on search input
       const searchInput = document.querySelector("#search-input");
@@ -577,10 +612,16 @@
         showOnly("#missing");
       }
     }
-  }
+  } // end loadStyle
 
   // wait for DOM load
   document.addEventListener("DOMContentLoaded", async function () {
+    // initialise lazy loader
+    lazyLoadInstance = new LazyLoad({});
+    if (!lazyLoadInstance) {
+      throw new Error("Could not initialise lazy loader");
+    }
+
     //
     // Modal handling
     //

@@ -1,9 +1,11 @@
 # Stable Diffusion Style Cheat Sheet
 
-A stand alone web site to guide users on different styling prompts for Stable Diffusion relating to fashion styling, hair and make up. It allows custom additions and local hosting and can be used as a visualk guide to other forms of prompt and output image association.
+A stand alone web site to guide users on different styling prompts for Stable Diffusion relating to fashion styling, hair and make up. It allows custom additions and local hosting and can be used as a visual guide to other forms of prompt and output image association.
 
-- Images are generated using Stable Diffusion XL with the [RealVisXL V3.0 + Turbo](https://civitai.com/models/139562/realvisxl-v30-turbo) checkpoint.
-- Favicon is by [ionicons](https://github.com/ionic-team/ionicons).
+- Images are generated using Stable Diffusion XL with the [RealVisXL V3.0 + Turbo](https://civitai.com/models/139562/realvisxl-v30-turbo) checkpoint
+- Favicon is by [ionicons](https://github.com/ionic-team/ionicons)
+- [Vanillia LazyLoad](https://github.com/verlok/vanilla-lazyload)
+- SVG spinners [by Utkarsh Verma](https://github.com/n3r4zzurr0/svg-spinners)
 - Site inspired by [SupaGruen's cheatsheet](https://supagruen.github.io/StableDiffusion-CheatSheet/)
 
 ![Screenshot](images/screenshot.jpg)
