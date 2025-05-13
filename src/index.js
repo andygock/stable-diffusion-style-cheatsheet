@@ -49,7 +49,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 
     // global vars
     let imageDir = "./images";
-    let defaultStyleName = "female";
+    let defaultStyleName = "female-flux1dev";
     let imageIndex = 1; // can be 1 to 4
     const idsAvailable = ["#about", "#grid", "#missing"];
 

@@ -1,4 +1,4 @@
-# Stable Diffusion Style Cheat Sheet
+# Stable Diffusion and FLUX Style Cheat Sheet
 
 A stand alone web site to guide users on different styling prompts for Stable Diffusion relating to fashion styling, hair and make up. It allows custom additions and local hosting and can be used as a visual guide to other forms of prompt and output image association.
 
@@ -21,7 +21,7 @@ Simplest way is by using Python HTTP server then visiting <http://localhost:8000
 python -m http.server
 ```
 
-For web developmenet, I used [live-server](https://github.com/tapio/live-server) for its excellent live reloading when editing files.
+For web development, I used [live-server](https://github.com/tapio/live-server) for its excellent live reloading when editing files.
 
 ## Custom categories
 
