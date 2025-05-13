@@ -3,15 +3,16 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Stable Diffusion Style Cheat Sheet</title>
+    <title>Stable Diffusion and FLUX Style Cheat Sheet</title>
     <link rel="stylesheet" href="./css/style.css" />
     <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
   </head>
   <body>
-    <h1>Stable Diffusion Style Cheat Sheet</h1>
+    <h1>Stable Diffusion and FLUX Style Cheat Sheet</h1>
     <div id="menu-header">
       <div id="menu">
-        <a href="#/female">Women's Style</a>
+        <a href="#/female-flux1dev">Women's Style (FLUX)</a>
+        <a href="#/female">Women's Style (SDXL)</a>
         <a href="#/male">Men's Style</a>
         <a href="#/hair-makeup">Hair & Makeup</a>
         <a href="#/hair-beard">Hair & Beard</a>
@@ -36,18 +37,25 @@
       <h1>Credits</h1>
       <ul>
         <li>
-          Images generated using
+          SDXL images generated using
           <a href="https://stability.ai/stable-image">Stable Diffusion XL</a>
           with checkpoint
           <a href="https://civitai.com/models/139562/realvisxl-v30-turbo"
             >RealVisXL V3.0 + Turbo</a
           >
-        </li>
-        <li>
-          Batch image generation using
+          and
           <a href="https://github.com/AUTOMATIC1111/stable-diffusion-webui"
             >Automatic1111</a
           >
+        </li>
+        <li>
+          FLUX images are generated using
+          <a href="https://huggingface.co/black-forest-labs/FLUX.1-dev"
+            >FLUX.1 Dev</a
+          >, 20 steps, with
+          <a href="https://github.com/ali-vilab/TeaCache">TeaCache</a>
+          (<span>rel_l1_thresh=0.4 max_skip_steps=3</span>) and
+          <a href="https://www.comfy.org/">ComfyUI</a>.
         </li>
         <li>
           Favicon is by
@@ -60,7 +68,8 @@
           >
         </li>
       </ul>
-      <h1>Notice</h1>
+
+      <h2>Notice</h2>
       <p>
         Please be aware that the images on this website have been generated
         using generative artificial intelligence (AI). These AI-generated images
@@ -73,6 +82,78 @@
         and creative, they should not be taken as accurate representations of
         physical reality.
       </p>
+
+      <h2>Prompts</h2>
+
+      <p>Click to view the prompts used to generate these images.</p>
+
+      <details>
+        <summary>Women's Style (FLUX) prompts</summary>
+
+        <p>Look 1:</p>
+        <blockquote>
+          A high-definition photograph captures a 40-year-old woman in a
+          private, opulent lounge, exuding poise and allure. She is a brunette
+          with a cascade of expertly styled hair, captivating hazel eyes, and a
+          subtle smile. She is dressed in a _OUTFIT_. The room is bathed in the
+          warm glow of ambient lighting, with strategic spotlights that create
+          dramatic shadows and highlight her form. The lounge is furnished with
+          rich, dark wood furniture, a modern fireplace, and a large, ornate
+          mirror reflecting the scene. She is leaning against a grand piano, her
+          hand resting gently on the polished surface. The shot is a close-up,
+          emphasizing her facial features and the details of her attire, with a
+          shallow depth of field that blurs the background. The image has a
+          cinematic quality, with a focus on texture and a sense of intimacy.
+        </blockquote>
+
+        <p>Look 2:</p>
+        <blockquote>
+          A captivating photograph showcases a 20-year-old blonde European woman
+          in an intimate bedroom scene, dressed in a striking outfit. She is
+          wearing a _OUTFIT_. Her blonde hair is neatly pulled back, and her
+          eyes sparkle with a hint of mischief. The lighting is dramatic, with a
+          single spotlight illuminating the woman, casting long shadows and
+          creating a sense of mystery. The bedroom is minimally decorated, with
+          a modern bed, a large mirror reflecting the scene, and a few artistic
+          pieces. The shot is a wide-angle, capturing the woman's full figure
+          and the bedroom environment. The image is rendered with a painterly
+          style, with soft bokeh effects and a focus on texture and color.
+        </blockquote>
+
+        <p>Look 3:</p>
+        <blockquote>
+          A stunning, full-length photograph of a 30-year-old American redhead
+          woman in a park, bathed in golden hour light. Her fair skin is
+          flawlessly smooth, adorned with a scattering of freckles across her
+          shoulders, and her fiery red hair cascades down her back in loose
+          waves. She wears a _OUTFIT_. Her pose is relaxed, with a slight turn
+          of her head and a soft smile, suggesting a moment of quiet
+          contemplation. The lighting is warm and inviting, casting long shadows
+          and creating a soft bokeh effect in the background. The setting is a
+          lush park, with green trees and soft grass underfoot. The image is
+          shot from a slightly low angle, emphasizing her height and the
+          elegance of her attire. The image is photorealistic, hyper-detailed,
+          and showcases a shallow depth of field, with a focus on the woman,
+          while the background is softly blurred.
+        </blockquote>
+
+        <p>Look 4:</p>
+        <blockquote>
+          A vibrant photograph captures a 50-year-old brunette woman at home,
+          radiating comfort and style. She is seated on a plush, cream-colored
+          sofa, bathed in warm, natural light streaming through a large window.
+          The woman, with a gentle smile and relaxed posture, wears a _OUTFIT_.
+          Her brunette hair is styled in soft waves, framing her face, which
+          bears the subtle marks of age, adding character to her features. The
+          room is tastefully decorated with modern furniture and abstract art,
+          creating a cozy yet sophisticated atmosphere. The shot is a
+          wide-angle, showcasing the entire scene and emphasizing the
+          comfortable, inviting ambiance of the home. The image is
+          photorealistic, with a shallow depth of field, focusing on the woman
+          and softening the background, highlighting the texture of the fabrics
+          and the play of light and shadow.
+        </blockquote>
+      </details>
     </div>
     <div id="footer">
       &copy;&nbsp;<a href="https://gock.net/">Andy Gock</a>&nbsp;|&nbsp;

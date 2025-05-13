@@ -57,13 +57,16 @@ h2 {
   justify-content: space-between;
   align-items: center;
   margin-bottom: 1rem;
+  flex-wrap: wrap;
 }
 
 /* menu  */
 
 #menu {
   display: flex;
-  margin-bottom: 1rem;
+  justify-content: flex-start;
+  align-content: flex-start;
+  flex-wrap: wrap;
 }
 
 #menu a {
@@ -74,6 +77,7 @@ h2 {
   margin-right: 0.2rem;
   padding: 0.4rem;
   transition: color 0.3s ease;
+  margin-bottom: 0.5rem;
 }
 
 #menu a:hover,
@@ -364,6 +368,12 @@ a.active {
   right: 10px;
 }
 
+@media (max-width: 768px) {
+  #search-container {
+    display: none;
+  }
+}
+
 input#search-input {
   font-family: var(--font-family);
   font-weight: bold;
@@ -401,4 +411,13 @@ button#search-clear:hover {
 
 #about {
   font-size: large;
+}
+
+#index button {
+  cursor: pointer;
+}
+
+summary {
+  font-weight: bold;
+  cursor: pointer;
 }

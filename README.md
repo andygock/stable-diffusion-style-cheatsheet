@@ -2,7 +2,8 @@
 
 A stand alone web site to guide users on different styling prompts for Stable Diffusion relating to fashion styling, hair and make up. It allows custom additions and local hosting and can be used as a visual guide to other forms of prompt and output image association.
 
-- Images are generated using Stable Diffusion XL with the [RealVisXL V3.0 + Turbo](https://civitai.com/models/139562/realvisxl-v30-turbo) checkpoint
+- SDXL images are generated using Stable Diffusion XL with the [RealVisXL V3.0 + Turbo](https://civitai.com/models/139562/realvisxl-v30-turbo) checkpoint
+- FLUX images are generated using [FLUX.1 Dev](https://huggingface.co/black-forest-labs/FLUX.1-dev) with [TeaCache](https://github.com/ali-vilab/TeaCache).
 - Favicon is by [ionicons](https://github.com/ionic-team/ionicons)
 - [Vanillia LazyLoad](https://github.com/verlok/vanilla-lazyload)
 - SVG spinners [by Utkarsh Verma](https://github.com/n3r4zzurr0/svg-spinners)

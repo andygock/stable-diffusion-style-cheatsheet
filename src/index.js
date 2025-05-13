@@ -192,7 +192,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 
         // revert back to original title after 1 second
         setTimeout(() => {
-          element.dataset.title = "Click to copy prompt to clipboard";
+          element.dataset.title = "Click to copy style to clipboard";
         }, 1000);
       } catch (err) {
         console.error("Could not copy text: ", err);
@@ -255,6 +255,7 @@ document.addEventListener("DOMContentLoaded", async function () {
       if (hash) {
         const styleFileFromHash = hash.replace("#/", "") + ".json";
         const styleFileNameFromHash = styleFileFromHash.split(".")[0];
+        console.log(hash, `Loading style: ${styleFileNameFromHash}`);
 
         // some special cases do not load grid, e.g #/about
         if (styleFileNameFromHash === "about") {
@@ -519,9 +520,9 @@ document.addEventListener("DOMContentLoaded", async function () {
           caption.classList.add("caption");
           caption.textContent = style;
 
-          // show tooltip to user that they can click to copy the prompt to clipboard
+          // show tooltip to user that they can click to copy the style to clipboard
           caption.classList.add("copyable");
-          caption.dataset.title = "Click to copy prompt to clipboard";
+          caption.dataset.title = "Click to copy style to clipboard";
 
           // add event listener to copy caption text to clipboard when clicked
           clickManager.add(caption, function () {
@@ -642,7 +643,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 
             // make the prompt copyable
             prompt.classList.add("copyable");
-            prompt.dataset.title = "Click to copy prompt to clipboard";
+            prompt.dataset.title = "Click to copy style to clipboard";
             clickManager.add(prompt, function () {
               copyToClipboard(this);
             });
